@@ -1,0 +1,18 @@
+Topological Sort:
+Linear ordering of verticies such that if there is an edge b/w u and v, u appears before v in that ordering
+
+Only applicable in case of directed acyclic graph
+
+1. In case graph not directed not possible because:
+Then if an edge b/w 1----2
+1 should come before 2
+2 should come before 1
+Not possible
+
+2. Incase graph cyclic not possible because:
+1 ---> 2 ---> 3 ---> 1
+
+1 comes before 2
+2 comes before 3
+3 comes before 1 
+Cyclic depdency so not possible

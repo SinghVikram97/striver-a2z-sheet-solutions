@@ -1,0 +1,7 @@
+a x b = LCM(a, b) * GCD (a, b)
+
+GCD(a,b) = GCD(a-b,b), a>b
+GCD(a,b) = GCD(a%b,b), a>b
+if b==0, GCD(a,0) = a
+
+Divisors occur in pair upto sqrt n
