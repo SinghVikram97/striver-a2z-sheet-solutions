@@ -9,17 +9,6 @@
 // median - if size equal - average of top elements
 // else if size unequal - top of larger sized heap
 
-// https://leetcode.com/problems/find-median-from-data-stream/description/
-
-// 2 Priority queues - min_heap, max_heap
-
-// min heap of higher elements 
-// max heap of lower elements
-
-// max diff in size should be 1
-// median - if size equal - average of top elements
-// else if size unequal - top of larger sized heap
-
 class MedianFinder {
 public:
     priority_queue<int> lowers; // max heap of lower elements [0,n];

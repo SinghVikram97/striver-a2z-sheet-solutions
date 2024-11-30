@@ -1,4 +1,8 @@
-// https://leetcode.com/problems/kth-largest-element-in-an-array/
+// https://leetcode.com/problems/kth-largest-element-in-an-array/description/
+
+// Min heap of k largest elements
+// Top of the heap would have kth largest element
+
 // min heap of k large elements
 // at the top will be least large element ie. kth largest element
 

@@ -1,4 +1,7 @@
-// https://leetcode.com/problems/kth-largest-element-in-a-stream
+// https://leetcode.com/problems/kth-largest-element-in-a-stream/description/
+
+// Keep min heap of k largest elements
+
 class KthLargest {
 public:
     priority_queue<int,vector<int>,greater<int> > pq;

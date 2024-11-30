@@ -199,3 +199,57 @@ class Solution
     	return atMostK(s,k)-atMostK(s,k-1);
     }
 };
+
+
+// Look at Sliding window question 5
+class Solution {
+  public:
+    long long int atMostK(string &s, int k){
+        if(k==0){
+            return 0;
+        }
+        int start=0;
+        int end=0;
+        int n=s.length();
+        unordered_map<char,int> mp;
+        int countDistinct=0;
+        
+        long long int ans=0;
+        while(start<=end && end<n){
+            mp[s[end]]++;
+            
+            if(mp[s[end]]==1){
+                countDistinct++;
+            }
+            
+            if(countDistinct<=k){
+                ans=ans+(end-start+1);
+                end++;
+            }else if(countDistinct>k){
+               // move start right
+               while(start<=end && countDistinct!=k){
+                   mp[s[start]]--;
+                   if(mp[s[start]]==0){
+                       countDistinct--;
+                   }
+                   start++; 
+               }
+               
+               if(start>end){
+                   // Look at sliding window question 5
+                   end=start;
+               }else if(countDistinct==k){
+                   // add ans for this valid window since we increment end in next statement
+                   // but we need to account for this window since it becomes valid now 
+                   ans=ans+(end-start+1);
+                   end++;
+               }
+            }
+        }
+        
+        return ans;
+    }
+    int countSubstr(string str, int k) {
+       return atMostK(str,k)-atMostK(str,k-1);
+    }
+};
