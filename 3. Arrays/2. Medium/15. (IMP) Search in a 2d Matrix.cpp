@@ -3,42 +3,36 @@
 // it means we can lay the entire matrix as a 1D array and it will be sorted
 // perform binary search then
 
-// B
-
 class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        vector<int> v;
+        int m=matrix.size();
+        int n=matrix[0].size();
 
-        int rows = matrix.size();
-        int cols = matrix[0].size();
-
-        int start = 0;
-        int end = (rows*cols)-1;
+        int start=0;
+        int end=(m*n)-1;
 
         while(start<=end){
+            int mid=(start+end)/2;
 
-            int mid = (start+end)/2;
-
-            pair<int,int> rowCol = rowColFromNum(rows, cols, mid);
+            pair<int,int> rowCol=getRowColFromNum(mid, m, n);
             int element = matrix[rowCol.first][rowCol.second];
-            
+
             if(element==target){
                 return true;
-            }
-            else if(target<element){
+            }else if(element<target){
+                // move right
+                start++;
+            }else{
                 // move left
                 end--;
-            }
-            else{
-                start++;
             }
         }
 
         return false;
     }
 
-    pair<int,int> rowColFromNum(int rows,int cols, int num){
+    pair<int,int> getRowColFromNum(int num, int m, int n){
         // 3*4 matrix
         // num: 5
         // rowNo = 5/4 = 1
@@ -48,9 +42,9 @@ public:
         // rowNo = 8/4 = 2
         // colNo = 8%4 = 0
 
-        int rowNo = num / cols;
-        int colNo = num % cols;
+        int rowNo=(num)/n;
+        int colNo=(num)%n;
 
-        return {rowNo, colNo};
+        return {rowNo,colNo};
     }
 };

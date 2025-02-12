@@ -53,4 +53,50 @@ int longestSubarrayWithSumK(vector<int> nums, long long target) {
     return maxi;
 }
 
-// 2 pointer
+// Sliding window
+/*
+Only works in case of all positives and no negatives
+Since if we have negative numbers in array we can't discard a window since that can reduce sum 
+even if sum is greater now in future if negatives present
+*/
+#include<bits/stdc++.h>
+int longestSubarrayWithSumK(vector<int> nums, long long target) {
+    long long int left=0;
+    long long int right=0;
+
+    long long int n=nums.size();
+
+    long long int csum=0;
+    long long int maxi=-1;
+
+    while(left<=right && right<n){
+        csum+=nums[right];
+
+        if(csum<target){
+            // move right
+            right++;
+        }else if(csum==target){
+            // update ans
+            maxi=max(maxi, right-left+1);
+            right++;
+        }else{
+            // shorten window
+            while(left<=right && csum>target){
+                csum=csum-nums[left];
+                left++;
+            }
+
+            if(left>right){
+                right = left; // start new window
+                csum=0;
+            }else if(csum==target){
+                maxi=max(maxi, right-left+1);
+                right++;
+            }else{
+                right++;
+            }
+        }
+    }
+
+    return maxi;
+}

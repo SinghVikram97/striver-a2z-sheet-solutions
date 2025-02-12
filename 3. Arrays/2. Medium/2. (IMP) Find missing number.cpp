@@ -21,7 +21,7 @@
 class Solution {
 public:
     int missingNumber(vector<int>& nums) {
-        // numbers b/w [1,n]
+        // numbers b/w [0,n]
         int n = nums.size();
         int increaseBy = n+1;
 

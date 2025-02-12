@@ -26,7 +26,7 @@ public:
            if(ms>cs){
              ms=cs;
              max_start=start; // update
-             end=i;
+             max_end=i;
            }
            
         }
