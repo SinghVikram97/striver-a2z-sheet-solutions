@@ -18,11 +18,6 @@ class Solution {
                 return start;
             }
 
-
-            if(mid+1<=end && nums[mid]>nums[mid+1]){
-                return mid+1;
-            }
-
             if(mid-1>=start && nums[mid]<nums[mid-1]){
                 return mid;
             }

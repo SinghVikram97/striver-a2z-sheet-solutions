@@ -1,4 +1,4 @@
-// https://leetcode.com/problems/kth-m%20issing-positive-number/description/
+// https://leetcode.com/problems/kth-missing-positive-number/description/
 
 
 // O(N)
@@ -65,7 +65,7 @@ public:
             if(arr[i]<=k){
                 k++; // shift by one
             }else{
-                return k;
+                return k; // since strictly increasing we can return from here
             }
         }
         return k;
@@ -147,5 +147,48 @@ public:
         }
 
         return left+k;
+    }
+};
+
+// Without left+k
+// Find first element whose missing is < k (Not equal less)
+// IF equal then we would have difficulty 
+class Solution {
+public:
+    int findKthPositive(vector<int>& arr, int k) {
+        int n=arr.size();
+
+        int start=0;
+        int end=n-1;
+        
+        int ans=-1;
+        while(start<=end){
+            int mid=(start+end)/2;
+
+            int missing = arr[mid]-(mid+1);
+
+            if(missing<k){
+                ans=mid;
+                start=mid+1;
+            }else{
+                end=mid-1;
+            }
+        }
+
+        // Can be a case where missing < k not found
+        // [3, 10]
+        //  2   8
+
+        // k=2 
+        // so answer would be k
+        if(ans==-1){
+            return k;
+        }
+
+        int missing=arr[ans]-(ans+1);
+        int more=k-missing;
+
+        return arr[ans]+more;
+        
     }
 };
