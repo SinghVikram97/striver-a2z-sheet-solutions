@@ -51,7 +51,7 @@ WE need to swap mat[i][j] and mat[j][i]
 
 but we can't swap them twice if traverse whole matrix
 we know if we are done with ith row then ith column numbers were swapped
-for begin j for a given i with i+1
+for begin j for a given i with i+1 (can be i or i+1 doesn't matter since j=i would be diagonal and it would be same number)
 */
 class Solution {
 public:
