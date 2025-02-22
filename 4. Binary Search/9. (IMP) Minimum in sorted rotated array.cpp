@@ -1,6 +1,11 @@
 // https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/
 
 // Distinct elements
+// 3 cases 
+/*
+1. Mid is the minimum
+2. otherwise minimum lies in unsorted part
+*/
 class Solution {
 public:
     int findMin(vector<int>& nums) {
@@ -14,13 +19,8 @@ public:
             int mid=(start+end)/2;
 
             // sorted
-            if(nums[end]>=nums[start]){
+            if(nums[end]>nums[start]){ // no equal since distinct elements
                 return nums[start]; // only for single element
-            }
-
-
-            if(mid+1<=end && nums[mid]>nums[mid+1]){
-                return nums[mid+1];
             }
 
             if(mid-1>=start && nums[mid]<nums[mid-1]){
@@ -35,7 +35,7 @@ public:
                 // right unsorted
                 start=mid+1;
             }else{
-                
+                // Don't need this since distinct elements
             }
 
         }
