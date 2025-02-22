@@ -1,1 +1,0 @@
-1. Rotate array by K-> reverse whole array, reverse till k and reverse from k to end
