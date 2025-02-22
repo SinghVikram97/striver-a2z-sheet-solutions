@@ -17,6 +17,9 @@ here order preserved
 */
 
 /*
+In case we don't want to preserver order we can use wall to push all +ve elements to back 
+and -ve to front, now we effectively have 2 arrays
+Solution:
 https://github.com/SinghVikram97/Interview-Prep/blob/master/IMP%20Questions/A_26%20(VIMP)%20Rearrange%20Positive%20Negative.cpp
 */
 

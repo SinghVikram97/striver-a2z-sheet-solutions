@@ -62,7 +62,7 @@ class Solution {
         while(i<m && j>=0){
             if(arr[i][j]==1){
                 // move left
-                ans=i;
+                ans=i; // imp
                 j--;
             }else{
                 // move down
