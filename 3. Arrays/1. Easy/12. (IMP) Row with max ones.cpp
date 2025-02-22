@@ -47,3 +47,28 @@ public:
 	}
 
 };
+
+// More optimised start at top right
+class Solution {
+  public:
+    int rowWithMax1s(vector<vector<int>> &arr) {
+        int m=arr.size();
+        int n=arr[0].size();
+        
+        int i=0;
+        int j=n-1;
+        
+        int ans;
+        while(i<m && j>=0){
+            if(arr[i][j]==1){
+                // move left
+                ans=i;
+                j--;
+            }else{
+                // move down
+                i++;
+            }
+        }
+        return ans;
+    }
+};
