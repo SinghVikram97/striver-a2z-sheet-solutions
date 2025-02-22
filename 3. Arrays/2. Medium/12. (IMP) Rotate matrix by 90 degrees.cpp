@@ -60,7 +60,7 @@ public:
         int n=matrix[0].size();
 
         for(int i=0;i<m;i++){
-            for(int j=i;j<n;j++){
+            for(int j=i+1;j<n;j++){
                 swap(matrix[i][j], matrix[j][i]);
             }
         }
@@ -113,7 +113,7 @@ public:
         int m=matrix.size();
 
         for(int i=0;i<m;i++){
-            for(int j=i;j<m;j++){
+            for(int j=i+1;j<m;j++){
                 swap(matrix[i][j], matrix[j][i]);
             }
         }
