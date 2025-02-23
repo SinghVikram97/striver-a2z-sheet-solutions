@@ -61,7 +61,7 @@ In worst case
 / 
 8 
 
-we calculate height for all left nodes ie. 8, 15, 40, 8 logn nodes 
+we calculate height for all left nodes ie. 18, 15, 40, 8 logn nodes 
 */
 
 class Solution {
