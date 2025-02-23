@@ -96,3 +96,81 @@ public:
         return ans;
     }
 };
+
+// More easy
+// We want to find kth element in sorted array approach
+// Change target to total/2 + 1
+class Solution{   
+public:
+    int upperBound(int target, vector<int> &v){
+        int size=v.size();
+
+        int start=0;
+        int end=size-1;
+
+        int ans=-1;
+        while(start<=end){
+            int mid=(start+end)/2;
+            
+            if(v[mid]<=target){
+                ans=mid;
+                // move further right
+                start=mid+1;
+            }else{
+                // move left
+                end=mid-1;
+            }
+        }
+        return ans;
+    }
+    int help(int number, vector<vector<int> > &mat, int m, int n){
+        // since every row sorted we can do binary search in every row to find elements less than equal to number
+
+        // find upper bound for the num
+        // 1 3 5 5 7 8
+        // upper bound 5 -> index 3 -> ie. 4 elements
+        int ans=0;
+        for(int i=0;i<m;i++){
+            ans=ans+(upperBound(number, mat[i])+1);
+            
+        }
+        return ans;
+    }
+    int median(vector<vector<int>> &matrix){
+        int R=matrix.size();
+        int C= matrix[0].size();
+        int total=R*C;
+
+        // 3*3=9/2=4 ie 4 elements smaller 4 bigger and median in middle
+        // we want 5th element
+        int target= (total)/2 + 1;
+
+        int mini=INT_MAX;
+        int maxi=INT_MIN;
+        
+        for(int i=0;i<R;i++){
+            maxi=max(maxi, matrix[i][C-1]);
+            mini=min(mini, matrix[i][0]);
+        }
+        
+        int start=mini;
+        int end=maxi;
+
+        int ans=-1;
+        while(start<=end){
+            int mid=(start+end)/2;
+
+            int smallerEqualElements = help(mid, matrix, R, C);
+
+            if(smallerEqualElements>=target){
+                ans=mid;
+                // move left we have to find first element
+                end=mid-1;
+            }else{
+                start=mid+1;
+            }
+        }
+
+        return ans;
+    }
+};

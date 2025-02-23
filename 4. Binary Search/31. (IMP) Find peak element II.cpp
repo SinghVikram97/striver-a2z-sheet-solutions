@@ -9,7 +9,7 @@
 // Now for the mid col we find the maximum element as it has highest chance of being a peak
 // Now top and bottom already sorted for it since it is max element in that column
 
-// See left and right is left is greater than this maximum element then move left
+// See left and right if left is greater than this maximum element then move left
 // Else move right
 
 // for example when we move left, since the left element > max of col which is to the right so 

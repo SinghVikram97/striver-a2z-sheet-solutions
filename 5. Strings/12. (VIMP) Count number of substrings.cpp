@@ -74,6 +74,9 @@ class Solution
 // Sliding window
 /*
 Since finding count of substrings with exact k distinct characters is tough using sliding window
+
+If it was length of longest substring then easy
+
 We find count of substrings with atmost k distinct characters ie. if k=3 we find substring with 1 distinct char, 2 distinct char, 3 distinct char
 Then we find substrings with atmost k-1 distinct characters
 
@@ -83,6 +86,7 @@ Then substrings with exactly k distinct characters = atmost(k)-atmost(k-1)
 
 
 // Longest substring with atmost k distinct characters
+// https://www.naukri.com/code360/problems/distinct-characters_2221410
 #include<bits/stdc++.h>
 int kDistinctChars(int k, string &str)
 {
@@ -99,12 +103,14 @@ int kDistinctChars(int k, string &str)
     while (start <= end && end < n) {
         mp[str[end]]++;
         
+        // Check if newly included character so increment count of distinct characters
         if(mp[str[end]]==1){
             countDistinct++;
         }
 
         if(countDistinct<=k){
             ans=max(ans,end-start+1);
+            end++;
         }else if(countDistinct>k){
             while(start<=end && countDistinct!=k){
                 mp[str[start]]--;
@@ -114,17 +120,22 @@ int kDistinctChars(int k, string &str)
                 start++;
             }
 
-            if(start>end){
-                break;
-            }
-
-            // calculate if countDistinct becomes k with this new end
-            if(countDistinct==k){
+            if(start>end && start<n){
+                // start new window
+                end=start;
+                countDistinct=1;
+                mp[str[end]]=1;
+                if(countDistinct==k){
+                    ans=max(ans,end-start+1);
+                }
+            }else if(countDistinct==k){
                 ans=max(ans, end-start+1);
+                end++;
+            }else{
+                // < k
+                end++;
             }
         }
-
-        end++;
     }
 
     return ans;
@@ -146,110 +157,65 @@ ie. aaba, aba, ba, a
 so we add 3-0+1=4
 
 */
-class Solution
-{
-  public:
-    long long int atMostK(string &s, int k){
-        if(k==0){
-            return 0;
-        }
-        int start=0;
-        int end=0;
-        int n=s.length();
-        unordered_map<char,int> mp;
-        int countDistinct=0;
-        
-        long long int ans=0;
-        while(start<=end && end<n){
-            mp[s[end]]++;
-            
-            if(mp[s[end]]==1){
-                countDistinct++;
-            }
-            
-            if(countDistinct<=k){
-                ans=ans+(end-start+1); 
-            }else if(countDistinct>k){
-               // move start right
-               while(start<=end && countDistinct!=k){
-                   mp[s[start]]--;
-                   if(mp[s[start]]==0){
-                       countDistinct--;
-                   }
-                   start++; 
-               }
-               
-               if(start>end){
-                   break;
-               }
-               
-               if(countDistinct==k){
-                   // add ans for this valid window since we increment end in next statement
-                   // but we need to account for this window since it becomes valid now 
-                   ans=ans+(end-start+1);
-               }
-            }
-            
-            end++; // move right
-        }
-        
-        return ans;
-    }
-    long long int substrCount (string s, int k) {
-    	return atMostK(s,k)-atMostK(s,k-1);
-    }
-};
-
-
-// Look at Sliding window question 5
 class Solution {
   public:
-    long long int atMostK(string &s, int k){
+    int atMost(string &s, int k){
+        int n=s.length();
+        
         if(k==0){
             return 0;
         }
-        int start=0;
-        int end=0;
-        int n=s.length();
-        unordered_map<char,int> mp;
+        
+        unordered_map<char,int> freq;
         int countDistinct=0;
         
-        long long int ans=0;
-        while(start<=end && end<n){
-            mp[s[end]]++;
+        int left=0;
+        int right=0;
+        
+        int ans=0;
+        
+        while(left<=right && right<n){
+            freq[s[right]]++;
             
-            if(mp[s[end]]==1){
+            // newly included
+            if(freq[s[right]]==1){
+                // increase count distinct
                 countDistinct++;
             }
             
             if(countDistinct<=k){
-                ans=ans+(end-start+1);
-                end++;
-            }else if(countDistinct>k){
-               // move start right
-               while(start<=end && countDistinct!=k){
-                   mp[s[start]]--;
-                   if(mp[s[start]]==0){
-                       countDistinct--;
-                   }
-                   start++; 
-               }
-               
-               if(start>end){
-                   // Look at sliding window question 5
-                   end=start;
-               }else if(countDistinct==k){
-                   // add ans for this valid window since we increment end in next statement
-                   // but we need to account for this window since it becomes valid now 
-                   ans=ans+(end-start+1);
-                   end++;
-               }
+                ans=ans+(right-left+1);
+                right++;
+            }else{
+                // > k
+                while(left<=right && countDistinct!=k){
+                    freq[s[left]]--;
+                    if(freq[s[left]]==0){
+                        countDistinct--;
+                    }
+                    left++;
+                }
+                
+                // if not possible
+                if(left>right){
+                    // start new window
+                    right=left;
+                    freq[s[right]]=1;
+                    countDistinct=1;
+                    if(countDistinct==k){
+                        ans=(right-left+1);
+                    }
+                }else if(countDistinct==k){
+                    // managed to bring it to k
+                    ans=ans+(right-left+1);
+                    right++;
+                }
             }
         }
         
         return ans;
     }
-    int countSubstr(string str, int k) {
-       return atMostK(str,k)-atMostK(str,k-1);
+    int countSubstr(string& s, int k) {
+        return atMost(s, k) - atMost(s, k-1);
     }
 };
