@@ -15,6 +15,7 @@ public:
         findNodesAtGivenDistance(root->right,distance-1,result);
     }
     
+    // Returns distance from target node
     int ans(TreeNode* root, TreeNode* target, int k, vector<int> &result){
 
         if(root==NULL || k<0){
