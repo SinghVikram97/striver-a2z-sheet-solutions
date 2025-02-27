@@ -52,11 +52,11 @@ public:
     }
 };
 
-// Memo - Memory limit exceeeded
+// Memo 
 
 class Solution {
 public:
-    int help(int i, int j, vector<int> cut, vector<vector<int> > &dp){
+    int help(int i, int j, vector<int> &cut, vector<vector<int> > &dp){
         if(i>j){
             return 0;
         }
@@ -92,46 +92,5 @@ public:
 
        vector<vector<int> > dp(cut.size()+5,vector<int>(cut.size()+5,-1));
        return help(1,cut.size()-2,cut,dp);
-    }
-};
-
-// Tabulation
-// k = i to j
-// dp[i][j]=min(dp[i][j],lengthOfStick+dp[i,k-1]+dp[k+1,j])
-
-class Solution {
-public:
-    int minCost(int n, vector<int>& cuts) {
-       sort(cuts.begin(),cuts.end());
-
-       vector<int> cut;
-       cut.push_back(0);
-
-       for(int i=0;i<cuts.size();i++){
-           cut.push_back(cuts[i]);
-       }
-
-       cut.push_back(n);
-
-       vector<vector<int> > dp(cut.size()+5,vector<int>(cut.size()+5,-1));
-
-       
-       // i>j dp[i][j]=0
-       for(int i=cut.size()-2;i>=1;i--){
-          for(int j=0;j<=cut.size()-2;j++){
-              if(i>j){
-                 dp[i][j]=0;
-              }
-              else{
-                dp[i][j]=INT_MAX-5;
-                int lengthOfStick=cut[j+1]-cut[i-1];
-                for(int k=i;k<=j;k++){
-                    dp[i][j]=min(dp[i][j],lengthOfStick+dp[i][k-1]+dp[k+1][j]);
-                }
-              }
-          }
-       }
-
-       return dp[1][cuts.size()-2];
     }
 };
