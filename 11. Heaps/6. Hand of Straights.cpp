@@ -1,4 +1,6 @@
 // https://leetcode.com/problems/hand-of-straights/
+
+// O(nlogn)
 class Solution {
 public:
     bool isNStraightHand(vector<int>& hand, int groupSize) {

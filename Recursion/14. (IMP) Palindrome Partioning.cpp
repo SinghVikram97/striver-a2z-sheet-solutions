@@ -1,5 +1,6 @@
 // https://leetcode.com/problems/palindrome-partitioning/
 
+// Time complexity -> 2^n-1
 class Solution {
 public:
     bool isPalindrome(string s){

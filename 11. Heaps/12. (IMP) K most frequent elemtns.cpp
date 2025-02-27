@@ -48,101 +48,83 @@ public:
 };
 
 // Using quickselect
-// Quickselect 
 /*
-Quickselect is a textbook algorithm typically used to solve the problems 
-"find kth something": kth smallest, kth largest, kth most frequent, kth less frequent, etc.
+Same as kth largest element in array here we find kth largest frequency using quickselect
 */
-
-/*
-Find frequency of every element
-ele->  4 5 2 1 3
-freq-> 1 4 3 3 2
-
-select random element as pivot for example 1
-arrange array such that all elements having freq < freq1 to the left
->= to the right of 1
-
-so
-ele->   4 3 1 2 5
-freq->  1 2 3 3 4
-
-Now number of elements from pivot to end = n-i
-if n-i=k it means these elements are k most frequent elements since we know every element after pivot has higher freq
-even tho each left and right half may not be sorted
-
-now if n-i>k move right
-if n-i<k move left
-*/ 
 class Solution {
 public:
-    int quickSelect(vector<int> &v, unordered_map<int,int> &mp, int pivotIndex, int start, int end){
-        // move pivot to end
-        swap(v[pivotIndex], v[end]);
+        int quickSort(vector<pair<int,int > > &nums, int start, int end, int k){
+        int n=end-start+1;
 
-        //int wall=-1; // for elements having less freq than pivot
-        int wall=start-1; // general case above for start=0
-
-        for(int i=start;i<end;i++){
-            if(mp[v[i]]<mp[v[end]]){
-                wall++;
-                swap(v[i], v[wall]);
-            }
+        if(start==end){
+            return nums[start].first;
         }
-
-        wall++;
-        swap(v[wall],v[end]); // for pivot index
-        return wall;
-    }
-    int driver(vector<int> &uniqueElements, unordered_map<int,int> &mp, int k){
-        int n=uniqueElements.size();
         
-        int start=0;
-        int end=n-1;
+        // select random pivot
+        // b/w start and end
+        // rand()%(end-start+1) -> [0, end-start]
+        // + start -> [start, end]
+        int pivotIndex = (rand()%(end-start+1))+start;
+        int pivotFreq = nums[pivotIndex].first;
 
-        while(start<=end){
-            // select random element as pivot
-            srand(time(NULL));
-            int pivotIndex=(rand()%(end-start+1))+start; // [0 -> end-start] + start -> [start -> end]
+        // swap pivot with last index
+        swap(nums[pivotIndex], nums[end]);
 
-            int pivotPosition = quickSelect(uniqueElements, mp, pivotIndex, start, end);
-
-            if(n-pivotPosition==k){
-                return pivotPosition;
-            }else if(n-pivotPosition>k){
-                // move right
-                start=pivotPosition+1;
-            }else{
-                // move left
-                end=pivotPosition-1;
+        // collect elements with freq > pivot to left (sort by freq in descending order)
+        int wall=start-1;
+        int i=start;
+        
+        while(i<end){
+            if(nums[i].first > pivotFreq){
+                wall++;
+                swap(nums[i], nums[wall]);
             }
+            i++;
         }
 
-        return -1;
+        // now wall at last element > pivot
+        // put pivot in place which is at the end
+        wall++;
+        swap(nums[wall], nums[end]);
+
+        // IMP to consider from start
+        int rankPivot = wall-start+1; 
+
+        if(rankPivot==k){
+            return pivotFreq;
+        }else if(k<rankPivot){
+            // kth largest in left subarray
+            return quickSort(nums, start, wall-1, k);
+        }else{
+            // kth largest in right subarray
+            // adjust rank
+            return quickSort(nums, wall+1, end, k-rankPivot);
+        }
     }
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        int n = nums.size();
+        int n=nums.size();
+        unordered_map<int,int> mp;
 
-        unordered_map<int, int> mp;
-
-        for (int i = 0; i < n; i++) {
+        for(int i=0;i<n;i++){
             mp[nums[i]]++;
         }
 
-        vector<int> uniqueElements;
-        for (auto it : mp) {
-            uniqueElements.push_back(it.first);
+        vector<pair<int,int> > freqArr;
+
+        for(auto it:mp){
+            freqArr.push_back({it.second, it.first}); // freq, element
         }
 
-        int pivotPosition = driver(uniqueElements, mp, k);
+        int kthLargestFreq = quickSort(freqArr, 0, freqArr.size()-1, k);
 
-        vector<int> ans;
-        // return elements after pivotPosition
-        for(int i=pivotPosition;i<uniqueElements.size();i++){
-            ans.push_back(uniqueElements[i]);
+        vector<int> result;
+        for (int i = 0; i < freqArr.size(); i++) {
+            if (freqArr[i].first >= kthLargestFreq) {
+                result.push_back(freqArr[i].second);
+            }
         }
 
-        return ans;
+        return result;
     }
 };
 

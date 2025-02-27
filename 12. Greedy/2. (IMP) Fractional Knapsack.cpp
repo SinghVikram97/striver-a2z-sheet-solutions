@@ -4,6 +4,12 @@
 
 // See the value/wt ratio and sort in descending order
 // We want to take package which provides most value per unit of weight
+
+/*
+    sort(wtRatio.begin(), wtRatio.end(), [](auto &a, auto &b){
+            return a.first>b.first;
+    });
+*/
 class Solution {
   public:
     // Function to get the maximum total value in the knapsack.

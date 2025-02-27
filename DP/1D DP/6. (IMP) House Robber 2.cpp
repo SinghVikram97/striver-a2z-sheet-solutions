@@ -1,8 +1,8 @@
 // https://leetcode.com/problems/house-robber-ii/
 
-// i, i-1 are neighbours
-// dp[i]=max(dp[i-1],nums[i]+dp[i-2])
-// if i==n-1 && i-2 ==0 X
+// Since houses circular first and last are neighbours
+// So either we rob first house or rob the last house
+// 2 possibilites and return max
 class Solution {
 public:
     int rob(vector<int>& nums) {

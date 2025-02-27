@@ -1,5 +1,8 @@
 // https://leetcode.com/problems/kth-largest-element-in-an-array/description/
 
+// Brute force - O(nlogn)
+// Sort the array and then element at index k-1
+
 // Min heap of k largest elements
 // Top of the heap would have kth largest element
 
@@ -10,6 +13,8 @@
 // but first build a pq of size k ie. 
 // insert 1st k elements into the heap and then proceed checking
 
+// TC: O(nlogk)
+// SC: O(k)
 class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {
@@ -31,59 +36,60 @@ public:
 };
 
 
-// Using binary search
+
+// Quickselect
+// TC: O(N^2) worst case Average case will be O(N)
 class Solution {
 public:
-    int upperBound(int target, vector<int> &v){
-        int size=v.size();
-        if(size==0){
-            return -1; // returns index
+    int quickSort(vector<int> &nums, int start, int end, int k){
+        int n=end-start+1;
+
+        if(start==end){
+            return nums[start];
         }
+        
+        // select random pivot
+        // b/w start and end
+        // rand()%(end-start+1) -> [0, end-start]
+        // + start -> [start, end]
+        int pivotIndex = (rand()%(end-start+1))+start;
+        int pivotNumber = nums[pivotIndex];
 
-        int start=0;
-        int end=size-1;
+        // swap pivot with last index
+        swap(nums[pivotIndex], nums[end]);
 
-        int ans=-1;
-        while(start<=end){
-            int mid=(start+end)/2;
-            
-            if(v[mid]<=target){
-                ans=mid;
-                // move further right
-                start=mid+1;
-            }else{
-                // move left
-                end=mid-1;
+        // collect numbers > pivot to left ( SORT IN DESCENDING ORDER)
+        int wall=start-1;
+        int i=start;
+        
+        while(i<end){
+            if(nums[i]>pivotNumber){
+                wall++;
+                swap(nums[i], nums[wall]);
             }
+            i++;
         }
-        return ans;
+
+        // now wall at last element > pivot
+        // put pivot in place which is at the end
+        wall++;
+        swap(nums[wall], nums[end]);
+
+        // IMP to consider from start
+        int rankPivot = wall-start+1; 
+
+        if(rankPivot==k){
+            return pivotNumber;
+        }else if(k<rankPivot){
+            // kth largest in left subarray
+            return quickSort(nums, start, wall-1, k);
+        }else{
+            // kth largest in right subarray
+            // adjust rank
+            return quickSort(nums, wall+1, end, k-rankPivot);
+        }
     }
     int findKthLargest(vector<int>& nums, int k) {
-        sort(nums.begin(), nums.end());
-        int n=nums.size();
-
-        // kth largest would lie at position
-        int position=n-k;
-
-        int start=0;
-        int end=n-1;
-
-        int ans=-1;
-        // answer would be leftmost number where number of elements <= num atleast position (>=position)
-        while(start<=end){
-            int mid=(start+end)/2;
-            int numElementsLessThanEqual=upperBound(nums[mid], nums);
-
-            if(numElementsLessThanEqual>=position){
-                ans=nums[mid];
-                // move left
-                end=mid-1;
-            }else{
-                // move right
-                start=mid+1;
-            }
-        }
-
-        return ans;
+        return quickSort(nums, 0, nums.size()-1, k);
     }
 };

@@ -35,7 +35,7 @@ public:
 class Solution {
 public:
     int countGoodNumbers(long long n) {
-        long long int M = 1000000007
+        long long int M = 1000000007;
         long long int ans = 5;
 
         if(n==1){
