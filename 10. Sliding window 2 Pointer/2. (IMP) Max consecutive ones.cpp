@@ -54,3 +54,54 @@ public:
         return ans;
     }
 };
+
+// Another approach
+class Solution {
+public:
+    int longestOnes(vector<int>& nums, int k) {
+        int n=nums.size();
+
+        int left=0;
+        int right=0;
+
+        int ans=0;
+        int count0=0;
+        while(left<=right && right<n){
+            if(nums[right]==1){
+                // update ans
+                ans=max(ans, right-left+1);
+                // extend window
+                right++;
+            }else{
+                count0++;
+                if(count0<=k){
+                    // okay
+                    // update ans
+                    ans=max(ans, right-left+1);
+                    // extend window
+                    right++;
+                }else{
+                    // greater than k so reduce window size from left
+                    
+                    while(left<=right && count0!=k){
+                        if(nums[left]==0){
+                            count0--;
+                        }
+                        left++;
+                    }
+
+                    if(left>right){
+                        // start new window
+                        right=left;
+                        count0=0;
+                    }else{
+                        ans=max(ans, right-left+1);
+                        // extend window
+                        right++;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+};
