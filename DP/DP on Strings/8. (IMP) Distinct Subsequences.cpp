@@ -24,7 +24,7 @@ public:
     }
 };
 
-// Similar to coind change number of ways to make t from s 
+// Similar to coin change number of ways to make t from s 
 // TLE
 class Solution {
 public:

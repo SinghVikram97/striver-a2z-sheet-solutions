@@ -279,3 +279,62 @@ public:
         return dp[m][n];
     }
 }; 
+
+// We don't need op3 in memo -> this passes
+class Solution {
+public:
+    bool help(int i, int j, string &s, string &p, vector<vector<int> > &dp){
+        int m=s.length();
+        int n=p.length();
+
+        if(dp[i][j]!=-1){
+            return dp[i][j];
+        }
+
+        if(i==m && j==n){
+            return dp[i][j]=true;
+        }
+
+        if(i==m){
+            for(int k=j;k<n;k++){
+                if(p[k]!='*'){
+                    return dp[i][j]=false;
+                }
+            }
+            return dp[i][j]=true;
+        }
+
+        if(j==n){
+            return dp[i][j]=false;
+        }
+
+        if(p[j]=='*'){
+            // match empty sequence
+            int op1=help(i,j+1,s,p,dp);
+            // use it once to match a single char
+            // int op2=help(i+1,j+1,s,p,dp);
+            // keep using it for next char
+            int op3=help(i+1,j,s,p,dp);
+            return dp[i][j]=op1 || op3;
+        }
+
+        else if(p[j]=='?'){
+            // match with single character
+            return dp[i][j]=help(i+1,j+1,s,p,dp);
+        }
+        else{
+            if(s[i]==p[j]){
+                return dp[i][j]=help(i+1,j+1,s,p,dp);
+            }
+            else{
+                return dp[i][j]=false;
+            }
+        }
+    }
+    bool isMatch(string s, string p) {
+        int m=s.length();
+        int n=p.length();
+        vector<vector<int> > dp(m+5,vector<int>(n+5,-1));
+        return help(0,0,s,p,dp);
+    }
+};

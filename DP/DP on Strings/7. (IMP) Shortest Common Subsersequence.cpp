@@ -113,6 +113,8 @@ public:
 // if s1[i]==s2[j] take s1[i] and move diagonally upwards
 // else move towards max, and add whatever you are discarding in the answer
 // suppose you move to dp[i-1][j] from dp[i][j] then add str1[j-1] in the answer
+// If dp[i-1][j] > dp[i][j-1], it means the LCS length is longer when excluding str2[j-1], 
+// so we include str1[i-1] in the supersequence and move up (i--).
 class Solution {
 public:
     string shortestCommonSupersequence(string str1, string str2) {
