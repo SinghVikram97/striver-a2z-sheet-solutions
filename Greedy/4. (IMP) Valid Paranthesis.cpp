@@ -95,3 +95,40 @@ public:
         return help(s,0,0,dp);
     }
 };
+
+// Without DP
+// First consider * as ( and 
+// And then as ) and start from back
+class Solution {
+public:
+    bool checkValidString(string s) {
+        int n=s.length();
+
+        int openCount=0;
+        for(int i=0;i<n;i++){
+            if(s[i]=='(' || s[i]=='*'){
+                openCount++;
+            }else if(s[i]==')'){
+                if(openCount>0){
+                    openCount--;
+                }else{
+                    return false;
+                }
+            }
+        }
+
+        int closedCount=0;
+        for(int i=n-1;i>=0;i--){
+            if(s[i]==')' || s[i]=='*'){
+                closedCount++;
+            }else if(s[i]=='('){
+                if(closedCount>0){
+                    closedCount--;
+                }else{
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+};
