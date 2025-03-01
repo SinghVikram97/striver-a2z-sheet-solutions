@@ -97,3 +97,66 @@ public:
         return ans;
     }
 };
+
+// Another approach
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+        int n=s.length();
+
+        int left=0;
+        int right=0;
+
+        unordered_map<char,int> mp;
+        int maxFreq=0;
+
+        int ans=INT_MIN+5;
+
+        while(left<=right && right<n){
+            mp[s[right]]++;
+            maxFreq=max(maxFreq, mp[s[right]]);
+
+            int substringLength=right-left+1;
+
+            int diffChars=substringLength-maxFreq;
+
+            if(diffChars<=k){
+                // update ans
+                ans=max(ans, substringLength);
+                // expand window
+                right++;
+            }else{
+                // >k 
+                while(left<=right && diffChars>k){
+                    // shrink window
+                    mp[s[left]]--;
+                    left++;
+                    
+                    maxFreq=-1;
+                    // update maxFreq
+                    for(auto it:mp){
+                        maxFreq=max(maxFreq, it.second);
+                    }
+
+                    substringLength=(right-left+1);
+                    diffChars=substringLength-maxFreq;
+                }
+
+                if(left<=right && diffChars<=k){
+                    // now window valid update ans
+                    ans=max(ans,substringLength);
+                    // expand window
+                    right++;
+                }else if(left>right){
+                    // new window
+                    right=left;
+                }else{
+                    // diffChars>k
+                    right++;
+                }
+ 
+            }
+        }
+        return ans;
+    }
+};
