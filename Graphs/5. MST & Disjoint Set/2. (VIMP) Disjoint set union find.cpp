@@ -92,7 +92,7 @@ class DisjointSet{
                 parent[ultimateParentU]=ultimateParentV;
             }else{
                 // ranks equal attach anyone to anyone
-                // attach U to v
+                // attach U to V
                 parent[ultimateParentU]=ultimateParentV;
                 // change rank
                 rank[ultimateParentV]++;
