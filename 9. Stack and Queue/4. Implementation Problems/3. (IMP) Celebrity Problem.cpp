@@ -1,42 +1,6 @@
 // https://www.geeksforgeeks.org/problems/the-celebrity-problem/1
 
-// Brute Force - O(N^2)
-class Solution {
-  public:
-    // Function to find if there is a celebrity in the party or not.
-    int celebrity(vector<vector<int> >& mat) {
-        int m=mat.size();
-        int n=mat[0].size();
-        
-        int allZeroIndex=-1;
-        
-        for(int i=0;i<m;i++){
-            bool allZero=true;
-            for(int j=0;j<n;j++){
-                if(mat[i][j]!=0){
-                    allZero=false;
-                }
-            }
-            if(allZero){
-                allZeroIndex=i;
-                break;
-            }
-        }
-        
-        if(allZeroIndex==-1){
-            return -1;
-        }
-        
-        for(int i=0;i<m;i++){
-            if(i!=allZeroIndex && mat[i][allZeroIndex]!=1){
-                return -1;
-            }
-        }
-        return allZeroIndex;
-    }
-};
-
-// One more brute force form 2 arrays knowMe and Iknow
+// Brute force form 2 arrays knowMe and Iknow
 // For celebrity knowMe will be n-1 and Iknow will be 0
 
 // WE can solve this using 2 points one pointer at top and another at bottom

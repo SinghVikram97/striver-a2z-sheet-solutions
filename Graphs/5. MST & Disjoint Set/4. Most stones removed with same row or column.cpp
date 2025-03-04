@@ -1,4 +1,8 @@
 // https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/description/
+
+// Answer is numStone - numComponents
+// Since we can remove all stones within a component and keep one for each
+// So keep numComponents stones, so remove n-numComponents stones
 class Solution {
 public:
     void dfs(int startVertex, unordered_map<int,vector<int> > &adjList, vector<bool> &visited){
@@ -25,7 +29,7 @@ public:
             int y1=stones[i][1];
             
             // i is currentStone
-            for(int j=0;j<i;j++){
+            for(int j=i+1;j<numStones;j++){
                 int x2 = stones[j][0];
                 int y2 = stones[j][1];
 
@@ -37,14 +41,6 @@ public:
             }
 
         }
-
-        // for(int i=0;i<numStones;i++){
-        //     cout<<i<<" -> ";
-        //     for(int j=0;j<adjList[i].size();j++){
-        //         cout<<adjList[i][j]<<" ";
-        //     }
-        //     cout<<endl;
-        // }
 
         vector<bool> visited(numStones,false);
 

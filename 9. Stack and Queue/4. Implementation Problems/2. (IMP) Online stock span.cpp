@@ -67,6 +67,9 @@ number of elements <= 2 are 2
 
 Now comes 5
 
+NOTE CONSECUTIVE DAYS
+Example: 34, 7, 1, 2, 1
+here for last 1 ans is 1
 */
 class StockSpanner {
 public:
