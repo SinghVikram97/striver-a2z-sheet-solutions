@@ -26,6 +26,63 @@ public:
     }
 };
 
+
+// Using quicksort
+class Solution {
+public:
+    int quickSort(vector<int> &nums, int start, int end, int k){
+        int n=end-start+1;
+
+        if(start==end){
+            return nums[start];
+        }
+        
+        // select random pivot
+        // b/w start and end
+        // rand()%(end-start+1) -> [0, end-start]
+        // + start -> [start, end]
+        int pivotIndex = (rand()%(end-start+1))+start;
+        int pivotNumber = nums[pivotIndex];
+
+        // swap pivot with last index
+        swap(nums[pivotIndex], nums[end]);
+
+        // collect numbers > pivot to left ( SORT IN DESCENDING ORDER)
+        int wall=start-1;
+        int i=start;
+        
+        while(i<end){
+            if(nums[i]>pivotNumber){
+                wall++;
+                swap(nums[i], nums[wall]);
+            }
+            i++;
+        }
+
+        // now wall at last element > pivot
+        // put pivot in place which is at the end
+        wall++;
+        swap(nums[wall], nums[end]);
+
+        // IMP to consider from start
+        int rankPivot = wall-start+1; 
+
+        if(rankPivot==k){
+            return pivotNumber;
+        }else if(k<rankPivot){
+            // kth largest in left subarray
+            return quickSort(nums, start, wall-1, k);
+        }else{
+            // kth largest in right subarray
+            // adjust rank
+            return quickSort(nums, wall+1, end, k-rankPivot);
+        }
+    }
+    int findKthLargest(vector<int>& nums, int k) {
+        return quickSort(nums, 0, nums.size()-1, k);
+    }
+};
+
 // Using binary search
 // Note that it is the kth largest element in the sorted order, not the kth distinct element.
 // We can find kth element in sorted array in O(logn)
