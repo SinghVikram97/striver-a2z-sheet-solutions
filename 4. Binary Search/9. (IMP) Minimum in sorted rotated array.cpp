@@ -35,7 +35,10 @@ public:
                 // right unsorted
                 start=mid+1;
             }else{
-                // Don't need this since distinct elements
+                // incase of single element
+                if(mid==start && mid==end){
+                    return nums[mid];
+                }
             }
 
         }
