@@ -31,3 +31,30 @@ public:
         return -1;
     }
 };
+
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int count = 0;
+        int majorityEle = -1;
+
+        int n = nums.size();
+
+        for (int i = 0; i < n; i++) {
+            if (nums[i] == majorityEle) {
+                count++;
+            } else if (count == 0) {
+                majorityEle = nums[i];
+                count=1;
+            } else {
+                count--;
+            }
+        }
+        if (count > 0) {
+            // exists
+            return majorityEle;
+        }
+
+        return -1;
+    }
+};
