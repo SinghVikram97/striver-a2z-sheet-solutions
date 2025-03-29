@@ -35,8 +35,7 @@ public:
 
         int ans=n;
         for(int i=0;i<n;i++){
-            if(nums[i]%increaseBy==nums[i]){
-                // not modified
+            if(nums[i]<increaseBy){
                 return i;
             }
         }
