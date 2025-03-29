@@ -42,3 +42,31 @@ public:
         return ans;
     }
 };
+
+// OR
+
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        // numbers b/w [0,n]
+        int n = nums.size();
+        int increaseBy = n+1;
+
+        for(int i=0;i<n;i++){
+            int index = nums[i]%increaseBy;
+
+            if(index<n){
+                nums[index]+=increaseBy;
+            }
+        }
+
+        int ans=n;
+        for(int i=0;i<n;i++){
+            if(nums[i]%increaseBy==nums[i]){
+                // not modified
+                return i;
+            }
+        }
+        return ans;
+    }
+};
