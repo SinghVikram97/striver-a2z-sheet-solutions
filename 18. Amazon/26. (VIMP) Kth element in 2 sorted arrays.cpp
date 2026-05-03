@@ -1,5 +1,58 @@
 // https://www.geeksforgeeks.org/problems/k-th-element-of-two-sorted-array1317/1
 
+// O(N)
+class Solution {
+  public:
+    int kthElement(vector<int> &a, vector<int> &b, int k) {
+        int i=0;
+        int j=0;
+        
+        int n1=a.size();
+        int n2=b.size();
+        
+        int ans=-1;
+        
+        while(i<n1 && j<n2){
+            if(a[i]<=b[j]){
+                ans=a[i];
+                i++;
+                k--;
+            }else{
+                ans=b[j];
+                j++;
+                k--;
+            }
+            
+            if(k==0){
+                return ans;
+            }
+        }
+        
+        while(i<n1){
+            ans=a[i];
+            i++;
+            k--;
+            
+            if(k==0){
+                return ans;
+            }
+        }
+        
+        while(j<n2){
+            ans=b[j];
+            j++;
+            k--;
+            
+            if(k==0){
+                return ans;
+            }
+        }
+        return ans;
+    }
+};
+
+
+// Optimized
 /*
 
 [2,3,6,7,9] and [1,4,8,10] and k=5
