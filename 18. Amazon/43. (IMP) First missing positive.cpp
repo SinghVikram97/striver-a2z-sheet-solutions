@@ -49,3 +49,63 @@ public:
         return missing;
     }
 };
+
+
+// Revision
+/*
+Let's say array length is n
+
+2 cases
+1. missing number is n+1 ie. array contains 1,2,3..n
+2. missing number <= n 
+
+We can track each number that is <=n in that index (index-1) ie. use 0 as tracker for 1
+
+How to track?
+Increase by n+1 
+
+so that when u get it back n%(n+1)= n (ie. 1+maxNumber)
+
+But: numbers can <=0 or greater than n too in array - ignore them - make them 1
+*/
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& nums) {
+        int n=nums.size();
+
+        bool oneMissing = true;
+        for(int i=0;i<n;i++){
+            if(nums[i]==1){
+                oneMissing = false;
+            }
+            if(nums[i]<=0 || nums[i]>n){
+                nums[i]=1;
+            }
+        }
+
+        if(oneMissing){
+            return 1;
+        }
+
+        int maxNumber = 1+n;
+
+        for(int i=0;i<n;i++){
+            int originalNumber = nums[i]%(maxNumber);
+            // mark at that index - 1
+            if(originalNumber!=0){
+                nums[originalNumber-1]+=maxNumber;
+            }
+        }
+
+        // Now check if all present
+        for(int i=0;i<n;i++){
+            if(nums[i]<maxNumber){
+                // did not get marked
+                return i+1; 
+            }
+        }
+
+        // all present so answer is n+1
+        return n+1;
+    }
+};
