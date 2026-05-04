@@ -16,6 +16,18 @@ public:
 };
 
 // O(N)
+
+/*
+1 8 6 2 5 4 8 3 7
+0 1 2 3 4 5 6 7 8
+
+there are 2 variables - distance b/w 2 indexes and then min (a,b)
+
+maximize distance (ai,bi)
+maximum min(a,b)
+*/
+
+
 /*
 Initially, we consider the area constituting the exterior most lines. 
 Now, to maximize the area, we need to consider the area between the lines of larger lengths. 
