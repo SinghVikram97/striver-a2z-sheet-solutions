@@ -46,3 +46,47 @@ public:
         return -1;
     }
 };
+
+// Revision
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        int n=nums.size();
+
+        int start=0;
+        int end=n-1;
+
+        int mini=-1;
+        while(start<=end){
+            int mid=(start+end)/2;
+
+            if(nums[end]>nums[start]){
+                // sorted
+                return nums[start];
+            }
+
+            if(mid-1>=start && nums[mid]<nums[mid-1]){
+                return nums[mid];
+            }
+            
+            if(nums[mid]>nums[start]){
+                // left sorted
+                // minimum lies in right
+                start=mid+1;
+            }else if(nums[mid]<nums[end]){
+                // right sorted
+                // minimum lies on left
+                end=mid-1;
+            }else{
+                if(mid==start){
+                    return min(nums[mid], nums[end]);
+                }
+                if(mid==end){
+                    return min(nums[mid],nums[start]);
+                }
+            }
+        }
+
+        return -1;
+    }
+};
