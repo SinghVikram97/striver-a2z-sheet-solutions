@@ -11,7 +11,7 @@
 class Solution {
 public:
     int findPeakElement(vector<int>& nums) {
-        int n=nums.size();
+        int n = nums.size();
 
         int start=0;
         int end=n-1;
@@ -22,37 +22,26 @@ public:
             if(mid-1>=start && mid+1<=end && nums[mid]>nums[mid-1] && nums[mid]>nums[mid+1]){
                 return mid;
             }else if(mid-1>=start && mid+1<=end && nums[mid]>nums[mid-1] && nums[mid]<nums[mid+1]){
-                // like this /
-                // move right towards peak
+                // move right
                 start=mid+1;
             }else if(mid-1>=start && mid+1<=end && nums[mid]<nums[mid-1] && nums[mid]>nums[mid+1]){
-                // like this \
-                // move left towards peak
+                // move left
                 end=mid-1;
             }else if(mid-1>=start && mid+1<=end && nums[mid]<nums[mid-1] && nums[mid]<nums[mid+1]){
-                // like this \/
-                // move towards any peak
+                // move anywhere
                 start=mid+1;
-            }
-            else{
-                if(mid-1<start && mid+1>end){
-                    return mid; // single element
-                }else if(mid-1>=start){ 
-                    // 2 elements left
-                    if(nums[mid-1]>nums[mid]){
-                        return mid-1;
-                    }else{
-                        return mid;
-                    }
-                }else if(mid+1<=end){
-                    if(nums[mid+1]>nums[mid]){
-                        return mid+1;
-                    }else{
-                        return mid;
-                    }
+            }else{
+                // start mid end
+                // 2 elements so either start=mid or end=mid
+                // start end left basically return max of them
+                if(nums[start]>nums[end]){
+                    return start;
+                }else{
+                    return end;
                 }
             }
         }
+
         return -1;
     }
 };
