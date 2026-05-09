@@ -32,7 +32,7 @@ public:
 // Optimised using merge sort
 // Similar question on leetcode: https://leetcode.com/problems/count-of-smaller-numbers-after-self/description/
 // First solve number of inversions
-
+// https://github.com/SinghVikram97/striver-a2z-sheet-solutions/blob/5d6ba6f28e6d6b093e73fb438a306db17aa1350b/3.%20Arrays/3.%20Hard/13.%20(IMP)%20Count%20inversions.cpp#L73
 // https://www.geeksforgeeks.org/inversion-count-in-array-using-merge-sort/
 /*
 In an array if x, y at index i,j
