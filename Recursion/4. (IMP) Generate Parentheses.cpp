@@ -52,3 +52,28 @@ public:
         return ans;
     }
 };
+
+// REV - 2
+class Solution {
+public:
+    void generate(int n, int countLeft, int countRight, string cur, vector<string> &ans) {
+        if(countLeft+countRight==2*n){
+            ans.push_back(cur);
+            return;
+        }
+
+        if(countLeft<n){
+            generate(n,countLeft+1,countRight,cur+"(",ans);
+        }
+
+        if(countLeft>countRight){
+            generate(n,countLeft,countRight+1,cur+")",ans);
+        }
+    }
+
+    vector<string> generateParenthesis(int n) {
+        vector<string> ans;
+        generate(n,0,0,"",ans);
+        return ans;
+    }
+};
